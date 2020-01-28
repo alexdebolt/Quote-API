@@ -32,6 +32,22 @@ app.get('/api/quotes', (req, res, next) => {
     }
 });
 
-
+// posts a new quote with a quote and person attribute that is input by the user
+app.post('/api/quotes', (req, res, next) => {
+    // creating new quote object from user queries
+    const newQuote = {
+        quote: req.query.quote,
+        person: req.query.person
+    }
+    // if user entered in both a quote and a person then new quote is added to quotes array and then displayed for user
+    if(newQuote.quote && newQuote.person) {
+        quotes.push(newQuote);
+        res.send({ quote: newQuote})
+    } 
+    // if the user fails to input both values then a 400 message is sent
+    else {
+        res.status(400).send();
+    }
+})
 
 app.listen(PORT, () => console.log(`Now listening on port: ${PORT}`));
